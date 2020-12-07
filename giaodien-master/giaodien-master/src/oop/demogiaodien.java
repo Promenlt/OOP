@@ -159,7 +159,7 @@ public class demogiaodien extends javax.swing.JFrame {
             }
         });
 
-        this.setMa_CP("select Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HNX'");
+        this.setMa_CP("select distinct Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HNX'");
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             this.Ma_CP,
             new String [] {
@@ -341,7 +341,10 @@ public class demogiaodien extends javax.swing.JFrame {
             int selection = this.jComboBox1.getSelectedIndex();
             switch (selection){
             case 0:{  
-                    setMa_CP("select Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HNX'");
+                    setMa_CP("select distinct Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HNX'");
+                    if(this.Ma_CP[0][0].isEmpty()){
+                        setMa_CP("select distinct Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HNX'");
+                    }
                     jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     this.Ma_CP,
                     new String [] {
@@ -359,7 +362,10 @@ public class demogiaodien extends javax.swing.JFrame {
                     break;
             }
             case 1:{  
-                    setMa_CP("select Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HSX'");
+                    setMa_CP("select distinct top 300 Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HSX'");
+                    if(this.Ma_CP[0][0].isEmpty()){
+                        setMa_CP("select distinct top 300 Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HSX'");
+                    }
                     jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     this.Ma_CP,
                     new String [] {
@@ -377,7 +383,10 @@ public class demogiaodien extends javax.swing.JFrame {
                     break;
             }
             case 2:{  
-                    setMa_CP("select Ma_CP from So_Lieu_Giao_Dich where San_GD = 'UPCOM'");
+                    setMa_CP("select distinct Ma_CP from So_Lieu_Giao_Dich where San_GD = 'UPCOM'");
+                    if(this.Ma_CP[0][0].isEmpty()){
+                        setMa_CP("select distinct Ma_CP from So_Lieu_Giao_Dich where San_GD = 'UPCOM'");
+                    }
                     jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     this.Ma_CP,
                     new String [] {
@@ -400,9 +409,10 @@ public class demogiaodien extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String text = jButton1.getText();
+        String text = toTwodaybefore();
         long date = Long.parseLong(text.substring(0,2)) + Long.parseLong(text.substring(3,5)) * 100 + Long.parseLong(text.substring(6,10)) * 10000;
         //date = 20201112;   //for test 
+        System.out.println("date : " + date);
         if(this.selectedCP == null){
             this.jTextArea1.setText("Xin hãy chọn Mã Cổ Phiếu trước");
             return;
@@ -417,9 +427,10 @@ public class demogiaodien extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        String text = jButton1.getText();
+        String text = toYesterday();
         long date = Long.parseLong(text.substring(0,2)) + Long.parseLong(text.substring(3,5)) * 100 + Long.parseLong(text.substring(6,10)) * 10000;
         //date = 20201112;   //for test 
+        System.out.println("date : " + date);
         if(this.selectedCP == null){
             this.jTextArea1.setText("Xin hãy chọn Mã Cổ Phiếu trước");
             return;
@@ -434,14 +445,15 @@ public class demogiaodien extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        String text = jButton1.getText();
+        String text = toDay();
         long date = Long.parseLong(text.substring(0,2)) + Long.parseLong(text.substring(3,5)) * 100 + Long.parseLong(text.substring(6,10)) * 10000;
         //date = 20201112;   //for test 
-        if(this.selectedCP == null){
+        System.out.println("date : " + date);
+        if(this.selectedCP == null || this.selectedCP.isEmpty()){
             this.jTextArea1.setText("Xin hãy chọn Mã Cổ Phiếu trước");
             return;
         }
-        else{
+        else{   
              String query = "select * from So_Lieu_Giao_Dich where Ma_CP = '"
                 + this.selectedCP + "'"
                 + " and Ngay_GD = " + String.valueOf(date);
@@ -456,7 +468,7 @@ public class demogiaodien extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         String selectedData = this.jTextField1.getText();
-        if(selectedData == null){
+        if(selectedData.isEmpty()){
             this.jTextArea1.setText("Mời bạn điền mã Cổ Phiếu trước khi Search");
         }
         else{
@@ -495,8 +507,10 @@ public class demogiaodien extends javax.swing.JFrame {
                 +selectedData + "'";
         ResultSet rs = this.db.executeQuerySelect(query);
         String out = null;
+        boolean hasData = false;
         try {
                 while(rs.next()) {
+                    hasData = true;
                     out = "Ma co phieu : " + rs.getString(1);
                     break;
                 }
@@ -504,7 +518,10 @@ public class demogiaodien extends javax.swing.JFrame {
                     e.getStackTrace();
             }
         this.selectedCP = selectedData;
-        if(out == null) return;
+        if(!hasData){
+            this.jTextArea1.setText("Không tồn tại mã cổ phiếu bạn chọn");
+            return;
+        }
         this.jTextArea1.setText(out);
         
     }
@@ -513,15 +530,20 @@ public class demogiaodien extends javax.swing.JFrame {
         System.out.println(query);
         ResultSet rs = this.db.executeQuerySelect(query);
         String out = null;
+        boolean hasData = false;
         try {
                 while(rs.next()) {
+                    hasData = true;
                     out = "ngay GD : " + String.valueOf((long)rs.getDouble(2));
                     break;
                 }
         }catch(SQLException e) {
                     e.getStackTrace();
             }
-        if(out == null) return;
+        if(!hasData){
+            this.jTextArea1.setText("data chưa được upload !");
+            return;
+        }
         this.jTextArea1.setText(out);
     }
    

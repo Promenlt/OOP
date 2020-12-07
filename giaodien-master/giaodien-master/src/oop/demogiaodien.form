@@ -322,7 +322,7 @@
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTable1.setCellSelectionEnabled(true);&#xa;ListSelectionModel cellSelectionModel = jTable1.getSelectionModel();&#xa;cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;&#xa;    cellSelectionModel.addListSelectionListener(new ListSelectionListener() {&#xa;      public void valueChanged(ListSelectionEvent e) {&#xa;        String selectedData = null;&#xa;&#xa;        int[] selectedRow = jTable1.getSelectedRows();&#xa;        int[] selectedColumns = jTable1.getSelectedColumns();&#xa;&#xa;        for (int i = 0; i &lt; selectedRow.length; i++) {&#xa;          for (int j = 0; j &lt; selectedColumns.length; j++) {&#xa;            selectedData = (String) jTable1.getValueAt(selectedRow[i], selectedColumns[j]);&#xa;          }&#xa;        }&#xa;        updateInfo(selectedData);&#xa;      }&#xa;&#xa;    });"/>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="this.setMa_CP(&quot;select Ma_CP from So_Lieu_Giao_Dich where San_GD = &apos;HNX&apos;&quot;);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="this.setMa_CP(&quot;select distinct Ma_CP from So_Lieu_Giao_Dich where San_GD = &apos;HNX&apos;&quot;);"/>
               </AuxValues>
             </Component>
           </SubComponents>
