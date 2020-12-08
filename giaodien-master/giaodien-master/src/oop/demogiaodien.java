@@ -418,10 +418,7 @@ public class demogiaodien extends javax.swing.JFrame {
             return;
         }
         else{
-             String query = "select * from So_Lieu_Giao_Dich where Ma_CP = '"
-                + this.selectedCP + "'"
-                + " and Ngay_GD = " + String.valueOf(date);
-            this.updateInfoFinal(query);
+            this.updateInfoFinal(date,text);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -436,10 +433,7 @@ public class demogiaodien extends javax.swing.JFrame {
             return;
         }
         else{
-             String query = "select * from So_Lieu_Giao_Dich where Ma_CP = '"
-                + this.selectedCP + "'"
-                + " and Ngay_GD = " + String.valueOf(date);
-            this.updateInfoFinal(query);
+            this.updateInfoFinal(date,text);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -448,16 +442,16 @@ public class demogiaodien extends javax.swing.JFrame {
         String text = toDay();
         long date = Long.parseLong(text.substring(0,2)) + Long.parseLong(text.substring(3,5)) * 100 + Long.parseLong(text.substring(6,10)) * 10000;
         //date = 20201112;   //for test 
-        System.out.println("date : " + date);
+        //  select Gia_Dong_Cua,a.b from So_Lieu_Giao_Dich,(select Gia_Dong_Cua as b from So_Lieu_Giao_Dich where Ma_CP = 'AAA' and Ngay_GD = 20201122) as a where Ma_CP = 'AAA' and Ngay_GD = 20201123
+    
         if(this.selectedCP == null || this.selectedCP.isEmpty()){
             this.jTextArea1.setText("Xin hãy chọn Mã Cổ Phiếu trước");
             return;
         }
         else{   
-             String query = "select * from So_Lieu_Giao_Dich where Ma_CP = '"
-                + this.selectedCP + "'"
-                + " and Ngay_GD = " + String.valueOf(date);
-            this.updateInfoFinal(query);
+           
+            //System.out.println(query);
+            this.updateInfoFinal(date,text);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -503,9 +497,9 @@ public class demogiaodien extends javax.swing.JFrame {
     private void updateInfo(String selectedData){
         
         if(this.selectedCP != null && this.selectedCP.compareTo(selectedData) == 0) return;
-        String query = "select * from So_Lieu_Giao_Dich where Ma_CP = '"
+        String query1 = "select * from So_Lieu_Giao_Dich where Ma_CP = '"
                 +selectedData + "'";
-        ResultSet rs = this.db.executeQuerySelect(query);
+        ResultSet rs = this.db.executeQuerySelect(query1);
         String out = null;
         boolean hasData = false;
         try {
@@ -522,19 +516,22 @@ public class demogiaodien extends javax.swing.JFrame {
             this.jTextArea1.setText("Không tồn tại mã cổ phiếu bạn chọn");
             return;
         }
+      
+        
         this.jTextArea1.setText(out);
         
     }
     
-    private void updateInfoFinal(String query){
-        System.out.println(query);
-        ResultSet rs = this.db.executeQuerySelect(query);
-        String out = null;
+    private void updateInfoFinal(long date,String date_text){
+        String query1 = "select Gia_Dong_Cua,a.b from So_Lieu_Giao_Dich,(select Gia_Dong_Cua as b from So_Lieu_Giao_Dich where Ma_CP = '" + this.selectedCP + "' and Ngay_GD = " + String.valueOf(date-1) + ") as a where Ma_CP = '"+ this.selectedCP +"' and Ngay_GD = " + String.valueOf(date) ;     
+        System.out.println(query1);
+        ResultSet rs = this.db.executeQuerySelect(query1);
+        String out = "Kết thúc phiên giao dịch ngày " + date_text + ", Mã cổ phiếu " + this.selectedCP + " tăng " ;
         boolean hasData = false;
         try {
                 while(rs.next()) {
                     hasData = true;
-                    out = "ngay GD : " + String.valueOf((long)rs.getDouble(2));
+                    out += String.valueOf((rs.getDouble(1) - rs.getDouble(2)) / 100) + "% với giá đóng cửa là " + String.valueOf(rs.getDouble(1));
                     break;
                 }
         }catch(SQLException e) {
@@ -544,6 +541,14 @@ public class demogiaodien extends javax.swing.JFrame {
             this.jTextArea1.setText("data chưa được upload !");
             return;
         }
+       
+        //query 2
+        
+        
+        //query 3
+        
+        
+        
         this.jTextArea1.setText(out);
     }
    

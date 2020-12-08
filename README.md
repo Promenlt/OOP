@@ -2,8 +2,8 @@
 
 ## nhóm câu 1 - GIÁ TRONG NGÀY
 ```
-	Kết thúc phiên giao dịch ngày ... Mã cổ phiếu ... tăng ...% với giá đóng cửa là ...
-	Kết thúc phiên giao dịch ngày ... Mã cổ phiếu ... giảm ...% với giá đóng cửa là ...
+	Kết thúc phiên giao dịch ngày ... , Mã cổ phiếu ... tăng ...% với giá đóng cửa là ...
+	Kết thúc phiên giao dịch ngày ... , Mã cổ phiếu ... giảm ...% với giá đóng cửa là ...
 ```
 
 ## nhóm câu 2 - GIÁ TRONG NGÀY
@@ -21,7 +21,7 @@
 ## nhóm câu 4 - điều kiện - NHẬN XÉT CHỦ QUAN
 
 ```python 
-	if(KL_GD_now - KL_GD_yesterday >= 10000):
+	if(KL_GD_now - KL_GD_yesterday >= 20000):
 		if(gia_tang):
 			print "Cổ phiếu đang được mua vào số lượng cực lớn trên thị trường"
 		else:
@@ -38,3 +38,4 @@
 
 ```
 
+### updateinfo && updateinfoFinal
