@@ -495,8 +495,8 @@ public class demogiaodien extends javax.swing.JFrame {
     }
     
     private void updateInfo(String selectedData){
-        
-        if(this.selectedCP != null && this.selectedCP.compareTo(selectedData) == 0) return;
+      
+        if(this.selectedCP != null && this.selectedCP.equals(selectedData)) return;
         String query1 = "select * from So_Lieu_Giao_Dich where Ma_CP = '"
                 +selectedData + "'";
         ResultSet rs = this.db.executeQuerySelect(query1);
