@@ -9,7 +9,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
-
+import javax.swing.JTextField;
 import java.util.Date;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import processdata.ConnectDatabase;
 import processdata.ImportToDatabase;
+
 /**
  *
  * @author Admin
@@ -36,8 +37,10 @@ public class demogiaodien extends javax.swing.JFrame {
         jButton1.setText(toTwodaybefore());
         jButton2.setText(toYesterday());
         jButton4.setText(toDay());
-        
-    }
+        jTextField2.setHorizontalAlignment(JTextField.CENTER);
+        jTextField2.setEditable(false);
+        jTextArea1.setEditable(false);
+    };
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -68,6 +71,7 @@ public class demogiaodien extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
+        jTextField2 = new javax.swing.JTextField();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -95,6 +99,7 @@ public class demogiaodien extends javax.swing.JFrame {
 
         jTextArea1.setBackground(new java.awt.Color(153, 204, 255));
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Palatino Linotype", 0, 12)); // NOI18N
         jTextArea1.setRows(5);
         jScrollPane4.setViewportView(jTextArea1);
 
@@ -173,6 +178,12 @@ public class demogiaodien extends javax.swing.JFrame {
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
+            boolean[] canEdit = new boolean[]{
+                false
+            };
+            public boolean isCellEditable(int rowIndex, int columnIndex){
+                return canEdit[columnIndex];
+            }
         });
         jTable1.setToolTipText("");
         jTable1.setSelectionBackground(new java.awt.Color(204, 204, 204));
@@ -215,22 +226,23 @@ public class demogiaodien extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 266, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextField1)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jTextField1)
+                                    .addGap(18, 18, 18))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(jButton1)
-                                    .addGap(27, 27, 27)
+                                    .addGap(26, 26, 26)
                                     .addComponent(jButton2)
-                                    .addGap(0, 0, Short.MAX_VALUE)))
-                            .addGap(18, 18, 18)
+                                    .addGap(27, 27, 27)))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jButton6)
-                                .addComponent(jButton4))))
+                                .addComponent(jButton4)
+                                .addComponent(jButton6))))
                     .addComponent(jLabel3))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -252,23 +264,31 @@ public class demogiaodien extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(34, 34, 34))
+                    .addComponent(jButton2)
+                    .addComponent(jButton4))
+                .addContainerGap())
         );
+
+        jTextField2.setBackground(new java.awt.Color(0, 204, 204));
+        jTextField2.setFont(new java.awt.Font("Palatino Linotype", 1, 18)); // NOI18N
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(ndtimkiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -276,7 +296,8 @@ public class demogiaodien extends javax.swing.JFrame {
                         .addComponent(addbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 616, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextField2)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -287,8 +308,10 @@ public class demogiaodien extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ndtimkiem, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(addbutton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane4)))
                 .addContainerGap())
         );
 
@@ -362,10 +385,11 @@ public class demogiaodien extends javax.swing.JFrame {
                     break;
             }
             case 1:{  
-                    setMa_CP("select distinct top 300 Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HSX'");
+                    setMa_CP("select distinct  Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HSX'");
                     if(this.Ma_CP[0][0].isEmpty()){
-                        setMa_CP("select distinct top 300 Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HSX'");
+                        setMa_CP("select distinct Ma_CP from So_Lieu_Giao_Dich where San_GD = 'HSX'");
                     }
+                    
                     jTable1.setModel(new javax.swing.table.DefaultTableModel(
                     this.Ma_CP,
                     new String [] {
@@ -469,6 +493,10 @@ public class demogiaodien extends javax.swing.JFrame {
             updateInfo(selectedData);
         }
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
     
     
     private void setMa_CP(String query){
@@ -476,7 +504,7 @@ public class demogiaodien extends javax.swing.JFrame {
         if (rs == null){
             this.Ma_CP = null;
         }else{
-            String tmp[][] = new String[300][1];
+            String tmp[][] = new String[700][1];
             int i = 0;
             try {
                 while(rs.next()) {
@@ -495,17 +523,30 @@ public class demogiaodien extends javax.swing.JFrame {
     }
     
     private void updateInfo(String selectedData){
-      
-        if(this.selectedCP != null && this.selectedCP.equals(selectedData)) return;
-        String query1 = "select * from So_Lieu_Giao_Dich where Ma_CP = '"
-                +selectedData + "'";
+        boolean updateText = false;
+        String text = toDay();
+        long date = Long.parseLong(text.substring(0,2)) + Long.parseLong(text.substring(3,5)) * 100 + Long.parseLong(text.substring(6,10)) * 10000;
+
+        if(this.selectedCP != null && this.selectedCP.equals(selectedData)) return;  
+        
+        String query1 = "Select avg(Khoi_Luong) as b, San_GD  from So_Lieu_Giao_Dich where Ma_CP='" + selectedData + "' group by San_GD";
+        System.out.println(query1);
         ResultSet rs = this.db.executeQuerySelect(query1);
-        String out = null;
+        
+        String title = "Mã cổ phiếu " + selectedData ;
+        String out = "";
         boolean hasData = false;
         try {
                 while(rs.next()) {
-                    hasData = true;
-                    out = "Ma co phieu : " + rs.getString(1);
+                    hasData = true; 
+                    title += "\nThuộc Sàn Giao Dịch " + rs.getString(2);
+                    if(rs.getDouble(1) > 10000){
+                        out += "Cổ phiếu thuộc nhóm thanh khoản cao với khối lượng giao dịch trung bình là " + String.valueOf(rs.getDouble(1));
+                    }
+                    else{
+                         out += "Cổ phiếu thuộc nhóm thanh khoản thấp với khối lượng giao dịch trung bình là " + String.valueOf(rs.getDouble(1));
+                    }
+                  
                     break;
                 }
         }catch(SQLException e) {
@@ -513,7 +554,47 @@ public class demogiaodien extends javax.swing.JFrame {
             }
         this.selectedCP = selectedData;
         if(!hasData){
-            this.jTextArea1.setText("Không tồn tại mã cổ phiếu bạn chọn");
+            this.jTextArea1.setText("Không tồn tại mã cổ phiếu hoặc không có data cho mã cổ phiếu bạn chọn\n\t Vui lòng upload data!!");
+            return;
+        }
+        this.jTextField2.setText(title);
+        updateText = true;
+        
+        String query2 = "SELECT (S1.Gia_Dong_Cua-S2.Gia_Dong_Cua) AS gia_tang ,(S1.Khoi_Luong - S2.Khoi_Luong) AS diff FROM So_Lieu_Giao_Dich S1 ,So_Lieu_Giao_Dich S2 where S1.Ngay_GD = " + String.valueOf(date)
+                +"and S1.Ma_CP = '" + selectedData
+                + "' and S2.Ma_CP = '" + selectedData
+                + "' and  S2.Ngay_GD = " + String.valueOf(date-1);
+        System.out.println(query2);
+        rs = this.db.executeQuerySelect(query2);
+        hasData = false;
+        try {
+                while(rs.next()) {
+                    hasData = true; 
+                    if(rs.getLong(2) > 20000){
+                        if(rs.getDouble(1) > 0){
+                            out += "\nCổ phiếu đang được mua vào số lượng lớn trên thị trường\n";
+                        }
+                        else if (rs.getDouble(1) < 0){
+                            out += "\nCổ phiếu đang được bán ra số lượng lớn trên thị trường\n"; 
+                        }
+                        else{
+                            out += "\nCổ phiếu lưu động bình thường\n";
+                        }
+                    }
+                    else if (rs.getLong(2) < -20000){
+                        out += "\nCổ phiếu lưu động đang chậm\n";
+                    }
+                    else {
+                        out += "\nCổ phiếu lưu động bình thường\n";
+                    }
+                    break;
+                }
+        }catch(SQLException e) {
+                    e.getStackTrace();
+            }
+        this.selectedCP = selectedData;
+        if(!hasData){
+            if(!updateText) this.jTextArea1.setText("Không tồn tại mã cổ phiếu hoặc không có data cho mã cổ phiếu bạn chọn\n\t Vui lòng upload data!!");
             return;
         }
       
@@ -523,15 +604,23 @@ public class demogiaodien extends javax.swing.JFrame {
     }
     
     private void updateInfoFinal(long date,String date_text){
-        String query1 = "select Gia_Dong_Cua,a.b from So_Lieu_Giao_Dich,(select Gia_Dong_Cua as b from So_Lieu_Giao_Dich where Ma_CP = '" + this.selectedCP + "' and Ngay_GD = " + String.valueOf(date-1) + ") as a where Ma_CP = '"+ this.selectedCP +"' and Ngay_GD = " + String.valueOf(date) ;     
-        System.out.println(query1);
+        String query1 = "select Gia_Dong_Cua,Gia_Mo_Cua from So_Lieu_Giao_Dich where Ma_CP = '"+ this.selectedCP +"' and Ngay_GD = " + String.valueOf(date) ;     
+        //System.out.println(query1);
         ResultSet rs = this.db.executeQuerySelect(query1);
-        String out = "Kết thúc phiên giao dịch ngày " + date_text + ", Mã cổ phiếu " + this.selectedCP + " tăng " ;
-        boolean hasData = false;
+        String title = "Mã cổ phiếu " + this.selectedCP;
+        this.jTextField2.setText(title);
+        String out = "\nKết thúc phiên giao dịch ngày " + date_text + "," ;
+        boolean hasData = false; 
         try {
                 while(rs.next()) {
                     hasData = true;
-                    out += String.valueOf((rs.getDouble(1) - rs.getDouble(2)) / 100) + "% với giá đóng cửa là " + String.valueOf(rs.getDouble(1));
+                    if(rs.getDouble(1)-rs.getDouble(2) >= 0){
+                        out += " tăng ";
+                    }else{
+                        out += " giảm ";
+                    }
+                    System.out.println("[debug] now " + rs.getDouble(1) + " before " + rs.getDouble(2));     
+                    out += String.valueOf((rs.getDouble(1) - rs.getDouble(2))/rs.getDouble(1)) + "% với giá đóng cửa là " + String.valueOf(rs.getDouble(1)) + " Nghìn VND\n";
                     break;
                 }
         }catch(SQLException e) {
@@ -541,13 +630,62 @@ public class demogiaodien extends javax.swing.JFrame {
             this.jTextArea1.setText("data chưa được upload !");
             return;
         }
-       
+        
         //query 2
-        
-        
+        String query2 = "select Gia_Mo_Cua,Gia_Cao_Nhat, Gia_thap_Nhat from So_Lieu_Giao_Dich where Ma_CP='" + this.selectedCP + "' and Ngay_GD="  + String.valueOf(date);
+        System.out.println(query2);
+        rs = this.db.executeQuerySelect(query2);
+        out += "\t\t\t Giá mở cửa là ";
+        hasData = false; 
+        try {
+                while(rs.next()) {
+                    hasData = true;                         
+                    out += String.valueOf(rs.getDouble(1)) + " Nghìn VND,\n";
+                    out += "\t\t\t Giá cao nhất là ";
+                    out += String.valueOf(rs.getDouble(2)) + " Nghìn VND,\n";
+                    out += "\t\t\t Giá thấp nhất là ";
+                    out += String.valueOf(rs.getDouble(3)) + " Nghìn VND.\n";
+                    break;
+                }
+        }catch(SQLException e) {
+                    e.getStackTrace();
+            }
+        if(!hasData){
+            this.jTextArea1.setText("data chưa được upload !");
+            return;
+        }
+   
+  
         //query 3
         
-        
+        String query3 = "SELECT S1.Khoi_Luong AS now_KL,(S1.Khoi_Luong - S2.Khoi_Luong) AS diff FROM So_Lieu_Giao_Dich S1 ,So_Lieu_Giao_Dich S2 where S1.Ngay_GD = " + String.valueOf(date) + " and S1.Ma_CP = '" + this.selectedCP + "' and S2.Ma_CP = '"  + this.selectedCP + "' and  S2.Ngay_GD = " + String.valueOf(date-1);
+        System.out.println(query3);
+        rs = this.db.executeQuerySelect(query3);
+        out += "\n\nKhối lượng giao dịch trong phiên giao dịch là ";
+        hasData = false; 
+        try {
+                while(rs.next()) {
+                    hasData = true;
+                    
+                    out += String.valueOf(rs.getLong(1)) + " cổ phiếu,";
+                    if(rs.getDouble(2) > 0){
+                        out += " tăng ";
+                    }
+                    else{
+                        out += " giảm ";
+                    }
+                    System.out.println("[DEBUG] long1 " + rs.getLong(1) + " long2 " + Math.abs(rs.getLong(2)));
+                    out += String.valueOf(Math.abs(rs.getLong(2)) * 100/ rs.getLong(1));
+                    out += "% so với hôm trước đó.\n";      
+                    break;
+                }
+        }catch(SQLException e) {
+                    e.getStackTrace();
+            }
+        if(!hasData){
+            this.jTextArea1.setText("data chưa được upload !");
+            return;
+        }
         
         this.jTextArea1.setText(out);
     }
@@ -611,6 +749,7 @@ public class demogiaodien extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel ndtimkiem;
     private javax.swing.JLabel ndtimkiem1;
     // End of variables declaration//GEN-END:variables
